@@ -1,28 +1,25 @@
-import './App.css';
+import Navbar from "./components/Navbar";
+import TodoList from "./components/TodoList";
+
+import {useState, createContext} from "react";
+
+export const TodoContext = createContext();
 
 function App() {
+  const [todo, setTodo] = useState({todoTitle: "", todoContent: ""});
+  const [todos, setTodos] = useState([]);
+
+  const valueProvider = {
+    todo, setTodo, todos, setTodos
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src="Octocat.png" className="App-logo" alt="logo" />
-        <p>
-          GitHub Codespaces <span className="heart">♥️</span> React
-        </p>
-        <p className="small">
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </p>
-      </header>
-    </div>
+    <TodoContext.Provider value={valueProvider}>
+      <div className="App">
+        <Navbar />
+        <TodoList todosMap={todos} todo={todo} setTodo={setTodo} todos={todos} setTodos={setTodos} />
+      </div>
+    </TodoContext.Provider>
   );
 }
 
